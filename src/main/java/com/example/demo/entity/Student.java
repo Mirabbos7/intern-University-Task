@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -30,13 +31,4 @@ public class Student {
             inverseJoinColumns = @JoinColumn(name = "teacher_id")
     )
     private Set<Professor> teachers = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(
-            name = "student_discipline",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "discipline_id")
-    )
-    private Set<Discipline> disciplines = new HashSet<>();
-
 }

@@ -22,8 +22,4 @@ public class Discipline {
 
     @OneToMany(mappedBy = "discipline")
     private Set<Professor> teachers = new HashSet<>();
-
-    @ManyToMany(mappedBy = "disciplines")
-    private Set<Student> students = new HashSet<>();
-
 }
