@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.ProfessorDto;
 import com.example.demo.entity.Professor;
 import com.example.demo.repository.ProfessorRepository;
 import jakarta.transaction.Transactional;
@@ -15,16 +14,16 @@ public class ProfessorService {
 
     private ProfessorRepository professorRepository;
 
-    public ProfessorDto createProfessor(ProfessorDto professorDto){
+    public Professor createProfessor(Professor professorDto){
         return professorRepository.save(professorDto);
     }
 
-    public Optional<ProfessorDto> getProfessor(Long id){
+    public Optional<Professor> getProfessor(Long id){
         return professorRepository.findById(id);
     }
 
-    public void updateProfessor(Long id, ProfessorDto professorDetails){
-        ProfessorDto professor = professorRepository.findById(id).orElseThrow();
+    public void updateProfessor(Long id, Professor professorDetails){
+        Professor professor = professorRepository.findById(id).orElseThrow();
         professor.setLastName(professorDetails.getLastName());
         professor.setFirstName(professorDetails.getFirstName());
         professor.setMiddleName(professorDetails.getMiddleName());
@@ -38,7 +37,7 @@ public class ProfessorService {
         System.out.println("Professor with ID " + id + "has been removed");
     }
 
-    public List<ProfessorDto> professorList(){
+    public List<Professor> professorList(){
         return professorRepository.findAll();
     }
 }

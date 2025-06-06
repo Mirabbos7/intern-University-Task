@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/discipline")
@@ -24,8 +23,9 @@ public class DisciplineController {
     }
 
     @GetMapping("/get/{id}")
-    public Optional<DisciplineDto> getById(@PathVariable("id") Long id){
-        return Optional.of(disciplineService.getDiscipline(id).orElseThrow());
+    public ResponseEntity<DisciplineDto> getById(@PathVariable("id") Long id){
+        disciplineService.getDiscipline(id).orElseThrow();
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping
