@@ -15,6 +15,6 @@ public interface DisciplineMapper {
     Discipline toEntity (DisciplineDto disciplineDto);
     DisciplineDto toDto (Discipline discipline);
 
-    List<DisciplineDto> toDto(List<Discipline> entities);
-    List<Discipline> toEntity(List<DisciplineDto> dtos);
+    List<DisciplineDto> toDtoList(List<Discipline> entities);
+    List<Discipline> toEntityList(List<DisciplineDto> dtos);
 }

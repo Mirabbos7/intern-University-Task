@@ -15,6 +15,6 @@ public interface ProfessorMapper {
     Professor toEntity (ProfessorDto professorDto);
     ProfessorDto toDto (Professor professor);
 
-    List<ProfessorDto> toDto(List<Professor> professor);
-    List<Professor> toEntity(List<ProfessorDto> professorDtoList);
+    List<ProfessorDto> toDtoList(List<Professor> professor);
+    List<Professor> toEntityList(List<ProfessorDto> professorDtoList);
 }
