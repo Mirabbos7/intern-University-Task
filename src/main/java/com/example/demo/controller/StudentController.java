@@ -19,32 +19,32 @@ public class StudentController {
     }
 
     @GetMapping("/list")
-    public List<Student> getAll(){
+    public List<StudentDto> getAll(){
         return studentService.studentList();
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Student> getById(@PathVariable("id") Long id){
-        studentService.getStudent(id).orElseThrow();
-        return ResponseEntity.ok().build();
+    public ResponseEntity<StudentDto> getById(@PathVariable("id") Long id){
+        StudentDto studentDto = studentService.getStudent(id).orElseThrow();
+        return ResponseEntity.ok(studentDto);
     }
 
     @PostMapping
-    public ResponseEntity<Student> createStudent(@RequestBody Student discipline) {
-        Student created = studentService.createStudent(discipline);
+    public ResponseEntity<StudentDto> createStudent(@RequestBody StudentDto discipline) {
+        StudentDto created = studentService.createStudent(discipline);
         return ResponseEntity.ok(created);
     }
 
-    @DeleteMapping("delete/{id}")
-    public ResponseEntity<Student> deleteStudent(@PathVariable("id") Long id){
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<StudentDto> deleteStudent(@PathVariable("id") Long id){
         studentService.deleteStudent(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("update/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable("id") Long id, @RequestBody Student disciplineDetails){
-        studentService.updateStudent(id, disciplineDetails);
-        return ResponseEntity.ok().build();
+    @PutMapping("/update/{id}")
+    public ResponseEntity<StudentDto> updateStudent(@PathVariable("id") Long id, @RequestBody StudentDto studentDetailsDto){
+        StudentDto updated = studentService.updateStudent(id, studentDetailsDto);
+        return ResponseEntity.ok(updated);
     }
 
 }

@@ -28,8 +28,8 @@ public class ProfessorController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<ProfessorDto> getById(@PathVariable("id") Long id){
-        professorService.getProfessor(id).orElseThrow();
-        return ResponseEntity.ok().build();
+        ProfessorDto professorDto = professorService.getProfessor(id).orElseThrow();
+        return ResponseEntity.ok(professorDto);
     }
 
     @PostMapping
@@ -38,14 +38,14 @@ public class ProfessorController {
         return ResponseEntity.ok(created);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<ProfessorDto> deleteProfessor(@PathVariable("id") Long id){
         professorService.deleteProfessor(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("update/{id}")
-    public ResponseEntity<ProfessorDto> updateProfessor(@PathVariable("id") Long id, @RequestBody Professor professorDetails){
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ProfessorDto> updateProfessor(@PathVariable("id") Long id, @RequestBody ProfessorDto professorDetails){
         professorService.updateProfessor(id, professorDetails);
         return ResponseEntity.ok().build();
     }
