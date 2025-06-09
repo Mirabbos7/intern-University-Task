@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.DisciplineDto;
 import com.example.demo.dto.ProfessorDto;
+import com.example.demo.entity.Professor;
 import com.example.demo.service.ProfessorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +27,9 @@ public class ProfessorController {
     }
 
     @GetMapping("/get/{id}")
-    public Optional<ProfessorDto> getById(@PathVariable("id") Long id){
-        return Optional.of(professorService.getProfessor(id).orElseThrow());
+    public ResponseEntity<ProfessorDto> getById(@PathVariable("id") Long id){
+        ProfessorDto professorDto = professorService.getProfessor(id).orElseThrow();
+        return ResponseEntity.ok(professorDto);
     }
 
     @PostMapping
@@ -35,15 +38,15 @@ public class ProfessorController {
         return ResponseEntity.ok(created);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<ProfessorDto> deleteProfessor(@PathVariable("id") Long id){
         professorService.deleteProfessor(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("update/{id}")
-    public ResponseEntity<ProfessorDto> updateProfessor(@PathVariable("id") Long id, @RequestBody ProfessorDto professorDetailsDto){
-        professorService.updateProfessor(id, professorDetailsDto);
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ProfessorDto> updateProfessor(@PathVariable("id") Long id, @RequestBody ProfessorDto professorDetails){
+        professorService.updateProfessor(id, professorDetails);
         return ResponseEntity.ok().build();
     }
 }

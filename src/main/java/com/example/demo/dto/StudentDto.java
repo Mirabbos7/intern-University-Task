@@ -29,6 +29,4 @@ public class StudentDto {
 
     private Set<ProfessorDto> teachers;
 
-    private Set<DisciplineDto> disciplines;
-
 }

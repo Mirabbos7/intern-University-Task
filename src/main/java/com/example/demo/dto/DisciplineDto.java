@@ -19,6 +19,4 @@ public class DisciplineDto {
 
     private Set<ProfessorDto> teachers = new HashSet<>();
 
-    private Set<StudentDto> students = new HashSet<>();
-
 }

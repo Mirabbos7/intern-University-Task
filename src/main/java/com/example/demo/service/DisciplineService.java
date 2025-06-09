@@ -9,24 +9,34 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.demo.mapper.DisciplineMapper.DISCIPLINE_MAPPER;
+
 @Service
 @Transactional
 public class DisciplineService {
 
-    private DisciplineRepository disciplineRepository;
+    private final DisciplineRepository disciplineRepository;
 
-    public DisciplineDto createDiscipline(DisciplineDto discipline){
-        return disciplineRepository.save(discipline);
+    public DisciplineService(DisciplineRepository disciplineRepository) {
+        this.disciplineRepository = disciplineRepository;
+    }
+
+    public DisciplineDto createDiscipline(DisciplineDto disciplineDto){
+        Discipline entity = DISCIPLINE_MAPPER.toEntity(disciplineDto);
+        Discipline saved = disciplineRepository.save(entity);
+        return DISCIPLINE_MAPPER.toDto(saved);
     }
 
     public Optional<DisciplineDto> getDiscipline(Long id){
-        return disciplineRepository.findById(id);
+        return disciplineRepository.findById(id).map(DISCIPLINE_MAPPER::toDto);
     }
 
     public DisciplineDto updateDiscipline(Long id, DisciplineDto disciplineDetails){
-        DisciplineDto discipline = disciplineRepository.findById(id).orElseThrow();
+        Discipline discipline = disciplineRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Discipline not found with id: " + id));
         discipline.setName(disciplineDetails.getName());
-        return disciplineRepository.save(discipline);
+        Discipline saved = disciplineRepository.save(discipline);
+        return DISCIPLINE_MAPPER.toDto(saved);
     }
 
     public void deleteDiscipline(Long id){
@@ -34,7 +44,8 @@ public class DisciplineService {
         System.out.println("Discipline with ID " + id + "has been removed");
     }
 
-    public List<DisciplineDto> disciplineList(){
-        return disciplineRepository.findAll();
+    public List<DisciplineDto> disciplineList() {
+        List<Discipline> disciplines = disciplineRepository.findAll();
+        return DISCIPLINE_MAPPER.toDtoList(disciplines);
     }
 }

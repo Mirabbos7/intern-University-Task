@@ -8,29 +8,37 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import static com.example.demo.mapper.ProfessorMapper.PROFESSOR_MAPPER;
 
 @Service
 @Transactional
 public class ProfessorService {
 
-    private ProfessorRepository professorRepository;
+    private final ProfessorRepository professorRepository;
+
+    public ProfessorService(ProfessorRepository professorRepository) {
+        this.professorRepository = professorRepository;
+    }
 
     public ProfessorDto createProfessor(ProfessorDto professorDto){
-        return professorRepository.save(professorDto);
+        Professor entity = PROFESSOR_MAPPER.toEntity(professorDto);
+        Professor saved = professorRepository.save(entity);
+        return PROFESSOR_MAPPER.toDto(saved);
     }
 
     public Optional<ProfessorDto> getProfessor(Long id){
-        return professorRepository.findById(id);
+        return professorRepository.findById(id).map(PROFESSOR_MAPPER::toDto);
     }
 
-    public void updateProfessor(Long id, ProfessorDto professorDetails){
-        ProfessorDto professor = professorRepository.findById(id).orElseThrow();
+    public ProfessorDto updateProfessor(Long id, ProfessorDto professorDetails){
+        Professor professor = professorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Professor not found with id: " + id));
         professor.setLastName(professorDetails.getLastName());
         professor.setFirstName(professorDetails.getFirstName());
         professor.setMiddleName(professorDetails.getMiddleName());
         professor.setAge(professorDetails.getAge());
-        professorRepository.save(professor);
-        System.out.println("Professor's data with ID" + professorDetails.getId() + " has been updated");
+        Professor saved = professorRepository.save(professor);
+        return PROFESSOR_MAPPER.toDto(saved);
     }
 
     public void deleteProfessor(Long id){
@@ -39,6 +47,7 @@ public class ProfessorService {
     }
 
     public List<ProfessorDto> professorList(){
-        return professorRepository.findAll();
+        List<Professor> professors = professorRepository.findAll();
+        return PROFESSOR_MAPPER.toDtoList(professors);
     }
 }
