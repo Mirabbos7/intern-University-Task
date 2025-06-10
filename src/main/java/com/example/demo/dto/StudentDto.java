@@ -27,6 +27,6 @@ public class StudentDto {
     @Min(18)
     private int age;
 
-    private Set<ProfessorDto> teachers;
+    private Set<Long> teachersId;
 
 }
