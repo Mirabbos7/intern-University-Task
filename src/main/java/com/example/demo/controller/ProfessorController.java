@@ -1,14 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.DisciplineDto;
 import com.example.demo.dto.ProfessorDto;
-import com.example.demo.entity.Professor;
 import com.example.demo.service.ProfessorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/professor")
@@ -19,7 +16,6 @@ public class ProfessorController {
     public ProfessorController(ProfessorService disciplineService){
         this.professorService = disciplineService;
     }
-
 
     @GetMapping("/list")
     public List<ProfessorDto> getAll(){
@@ -46,7 +42,7 @@ public class ProfessorController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<ProfessorDto> updateProfessor(@PathVariable("id") Long id, @RequestBody ProfessorDto professorDetails){
-        professorService.updateProfessor(id, professorDetails);
-        return ResponseEntity.ok().build();
+        ProfessorDto professorDto = professorService.updateProfessor(id, professorDetails);
+        return ResponseEntity.ok(professorDto);
     }
 }

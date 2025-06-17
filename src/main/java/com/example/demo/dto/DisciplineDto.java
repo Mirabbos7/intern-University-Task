@@ -17,6 +17,6 @@ public class DisciplineDto {
     @NotBlank
     private String name;
 
-    private Set<ProfessorDto> teachers = new HashSet<>();
+    private Set<Long> teachersId = new HashSet<>();
 
 }

@@ -25,10 +25,9 @@ public class ProfessorDto {
     @NotBlank
     private String middleName;
 
-    @Min(18)
     private int age;
 
     private DisciplineDto discipline;
 
-    private Set<StudentDto> students = new HashSet<>();
+    private Set<Long> studentsId = new HashSet<>();
 }
