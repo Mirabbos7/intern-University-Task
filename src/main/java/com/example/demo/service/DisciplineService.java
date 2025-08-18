@@ -16,7 +16,6 @@ import java.util.Set;
 import static com.example.demo.mapper.DisciplineMapper.DISCIPLINE_MAPPER;
 
 @Service
-@Transactional
 public class DisciplineService {
 
     private final DisciplineRepository disciplineRepository;
@@ -27,6 +26,7 @@ public class DisciplineService {
         this.professorRepository = professorRepository;
     }
 
+    @Transactional
     public DisciplineDto createDiscipline(DisciplineDto disciplineDto) {
         Discipline entity = DISCIPLINE_MAPPER.toEntity(disciplineDto);
         if (disciplineDto.getTeachersId() != null && !disciplineDto.getTeachersId().isEmpty()) {
@@ -43,11 +43,11 @@ public class DisciplineService {
         return DISCIPLINE_MAPPER.toDto(saved);
     }
 
-
     public Optional<DisciplineDto> getDiscipline(Long id) {
         return disciplineRepository.findById(id).map(DISCIPLINE_MAPPER::toDto);
     }
 
+    @Transactional
     public DisciplineDto updateDiscipline(Long id, DisciplineDto disciplineDetails) {
         Discipline discipline = disciplineRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Discipline not found with id: " + id));
@@ -56,6 +56,7 @@ public class DisciplineService {
         return DISCIPLINE_MAPPER.toDto(saved);
     }
 
+    @Transactional
     public void deleteDiscipline(Long disciplineId) {
         Discipline discipline = disciplineRepository.findById(disciplineId)
                 .orElseThrow(() -> new RuntimeException("Discipline not found with id: " + disciplineId));
