@@ -18,7 +18,6 @@ import java.util.Set;
 import static com.example.demo.mapper.ProfessorMapper.PROFESSOR_MAPPER;
 
 @Service
-@Transactional
 public class ProfessorService {
 
     private final ProfessorRepository professorRepository;
@@ -30,7 +29,8 @@ public class ProfessorService {
         this.disciplineRepository = disciplineRepository;
         this.studentRepository = studentRepository;
     }
-
+    
+    @Transactional
     public ProfessorDto createProfessor(ProfessorDto professorDto) {
         Professor professor = PROFESSOR_MAPPER.toEntity(professorDto);
 
@@ -59,6 +59,7 @@ public class ProfessorService {
         return professorRepository.findById(id).map(PROFESSOR_MAPPER::toDto);
     }
 
+    @Transactional
     public ProfessorDto updateProfessor(Long id, ProfessorDto professorDetails) {
         Professor professor = professorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Professor not found with id: " + id));
@@ -84,6 +85,7 @@ public class ProfessorService {
         return PROFESSOR_MAPPER.toDto(saved);
     }
 
+    @Transactional
     public void deleteProfessor(Long professorId) {
         Professor professor = professorRepository.findById(professorId)
                 .orElseThrow(() -> new RuntimeException("Professor not found"));
