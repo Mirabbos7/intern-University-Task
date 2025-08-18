@@ -16,7 +16,6 @@ import java.util.Set;
 import static com.example.demo.mapper.StudentMapper.STUDENT_MAPPER;
 
 @Service
-@Transactional
 public class StudentService {
 
     private final StudentRepository studentRepository;
@@ -27,6 +26,7 @@ public class StudentService {
         this.professorRepository = professorRepository;
     }
 
+    @Transactional
     public StudentDto createStudent(StudentDto studentDto) {
         Student entity = STUDENT_MAPPER.toEntity(studentDto);
         if (studentDto.getTeachersId() != null && !studentDto.getTeachersId().isEmpty()) {
@@ -41,6 +41,7 @@ public class StudentService {
         return studentRepository.findById(id).map(STUDENT_MAPPER::toDto);
     }
 
+    @Transactional
     public StudentDto updateStudent(Long id, StudentDto studentDetails) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
@@ -59,7 +60,7 @@ public class StudentService {
         return STUDENT_MAPPER.toDto(refreshed);
     }
 
-
+    @Transactional
     public void deleteStudent(Long id) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
